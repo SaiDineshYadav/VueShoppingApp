@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>Test Vue</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Slot Example</h1>
+        <todo-item>Sample
+            <template #description>
+                <p>Sample Text to display</p>
+            </template>
+        </todo-item>
+        
+    </div>
+
+    <script type="text/x-template" id="todo-item-template">
+        <div>
+            <input type="checkbox" v-model="completed"/>
+            <span :class="{done: completed}">
+                <slot></slot>
+            </span>
+            <p>
+                <slot name="description"></slot>
+            </p>
+        </div>
+
+    </script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="todo.js"></script>
+
+    <script>
+        var shoppingList = new Vue({
+            el: '#app',
+
+        });
+    </script>
+    <style>
+        .done {
+            color: green;
+            text-decoration: line-through;
+        }
+    </style>
+</body>
+
+</html>

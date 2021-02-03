@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title>GIt Hub Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Git Hub Example</h1>
+
+    <div id="gitApp">
+        <div class="row">
+            <div class="col-8">
+                <github-user-card></github-user-card>
+            </div>
+            <div class="col-4">col-4</div>
+        </div>
+    </div>
+
+    <script type="text/x-template" id="github-user-card-template">
+        <div >
+            <div class="row">
+                <div class="col-sm-6" v-for="gitUser of gitUsersList">
+                    <div class="card" style="width: 18rem;" >
+                        <img class="card-img-top" :src="gitUser['avatar_url']" alt="Card image cap">
+                        <div class="card-body">
+                            {{gitUser['id']}}
+                            <h5 class="card-title">{{gitUser['login']}}</h5>
+                            <p class="card-text">{{gitUser['type']}}</p>
+                            <a :href="gitUser['url']" class="btn btn-primary">Full Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="git.js"></script>
+    <script>
+        Vue.prototype.$axios = axios;
+
+        new Vue({
+            el: '#gitApp',
+            data() {
+                return {
+
+                }
+            },
+
+        });
+    </script>
+</body>
+
+</html>

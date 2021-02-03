@@ -7,6 +7,10 @@
 <body>
     <div id="test">
         <h1>{{msg.toUpperCase()}}</h1>
+        <click-counter></click-counter>
+        <click-counter></click-counter>
+        <click-counter></click-counter>
+
         <button v-if="state == 'default'" @click="onAddClick()">Add Items</button>
         <button v-else @click="state = 'default'">Cancel</button>
         <div v-if="state == 'add'">
@@ -14,30 +18,67 @@
             <button v-bind:disabled="newItem == ''" @click="addItem()">Add</button>
         </div>
         <ul>
-            <li v-for="item of reverseItems" >
+            <li v-for="item of reverseItems">
                 {{item['label']}} - {{item['purchased']}}
             </li>
         </ul>
         <span v-if="items.length == 0">No Items Added to List</span>
+
+        <plan-picker-component  ></plan-picker-component>
     </div>
+
+
+    <script type="text/x-template" id="click-counter-template">
+        <div>
+            <p>Toatl Count: {{count}}</p>
+        <button @click="count++"> {{count}} </button>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="plan-picker-template">
+        <div>
+            <plan-component v-for="plan of plans" :name="plan" @select="selectPlan" :selected-plan="selectedPlan"></plan-component>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="plan-template">
+        <div @click="select()">
+           {{name}} - {{isSelected}}
+        </div>
+    </script>
+
     <script src="https://unpkg.com/vue"></script>
+    <script src="app.js"></script>
+    <script src="plan.js"></script>
+
     <script>
-       var shoppingList = new Vue({
+        var shoppingList = new Vue({
             el: '#test',
             data: {
                 msg: 'Shopping List App',
                 state: 'default',
-                items: [
-                    {label: 'Horlicks', purchased: false},
-                    {label: 'Boost', purchased: true},
-                    {label: 'Complan', purchased: true},
+                items: [{
+                        label: 'Horlicks',
+                        purchased: false
+                    },
+                    {
+                        label: 'Boost',
+                        purchased: true
+                    },
+                    {
+                        label: 'Complan',
+                        purchased: true
+                    },
                 ],
-                newItem: ''
+                newItem: '',
             },
             methods: {
                 addItem() {
                     if (this.newItem != '') {
-                        this.items.push({label: this.newItem, purchased: false});
+                        this.items.push({
+                            label: this.newItem,
+                            purchased: false
+                        });
                         this.newItem = '';
                     }
 
@@ -54,4 +95,5 @@
         });
     </script>
 </body>
+
 </html>
