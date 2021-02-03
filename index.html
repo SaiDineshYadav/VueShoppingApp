@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Test Vue</title>
+    </head>
+    <body>
+        <div id="test">
+            <h1>{{msg.toUpperCase()}}</h1>
+        </div>
+        <script src="https://unpkg.com/vue"></script>
+        <script>
+            new Vue({
+                el: '#test',
+                data: {
+                    msg: 'Shopping List App'
+                }
+            });
+        </script>
+    </body>
+</html>
