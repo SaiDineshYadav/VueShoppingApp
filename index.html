@@ -1,19 +1,57 @@
 <html>
-    <head>
-        <title>Test Vue</title>
-    </head>
-    <body>
-        <div id="test">
-            <h1>{{msg.toUpperCase()}}</h1>
+
+<head>
+    <title>Test Vue</title>
+</head>
+
+<body>
+    <div id="test">
+        <h1>{{msg.toUpperCase()}}</h1>
+        <button v-if="state == 'default'" @click="onAddClick()">Add Items</button>
+        <button v-else @click="state = 'default'">Cancel</button>
+        <div v-if="state == 'add'">
+            <input type="text" v-model="newItem" placeholder="Enter Item Name" v-on:keyup.enter="addItem()" />
+            <button v-bind:disabled="newItem == ''" @click="addItem()">Add</button>
         </div>
-        <script src="https://unpkg.com/vue"></script>
-        <script>
-            new Vue({
-                el: '#test',
-                data: {
-                    msg: 'Shopping List App'
+        <ul>
+            <li v-for="item of reverseItems" >
+                {{item['label']}} - {{item['purchased']}}
+            </li>
+        </ul>
+        <span v-if="items.length == 0">No Items Added to List</span>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+       var shoppingList = new Vue({
+            el: '#test',
+            data: {
+                msg: 'Shopping List App',
+                state: 'default',
+                items: [
+                    {label: 'Horlicks', purchased: false},
+                    {label: 'Boost', purchased: true},
+                    {label: 'Complan', purchased: true},
+                ],
+                newItem: ''
+            },
+            methods: {
+                addItem() {
+                    if (this.newItem != '') {
+                        this.items.push({label: this.newItem, purchased: false});
+                        this.newItem = '';
+                    }
+
+                },
+                onAddClick() {
+                    this.state = 'add';
                 }
-            });
-        </script>
-    </body>
+            },
+            computed: {
+                reverseItems() {
+                    return this.items.slice(0).reverse();
+                }
+            }
+        });
+    </script>
+</body>
 </html>
